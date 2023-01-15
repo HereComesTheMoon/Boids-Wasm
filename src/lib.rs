@@ -5,12 +5,6 @@ use rand::{thread_rng, Rng};
 
 use wasm_bindgen::prelude::*;
 
-// When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
-// allocator.
-// #[cfg(feature = "wee_alloc")]
-// #[global_allocator]
-// static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
-
 #[wasm_bindgen]
 extern "C" {
     fn alert(s: &str);
@@ -61,16 +55,8 @@ pub struct Parameters {
     alignment: f32,
     visual_range: f32,
     mouse_position: (f32, f32),
-    mouse_interactivity: bool,
-    follow_fear: f32,
+    mouse_interactivity: f32,
 }
-
-// struct Boid {
-//     x: f32,
-//     y: f32,
-//     dx: f32,
-//     dy: f32,
-// }
 
 #[wasm_bindgen]
 pub struct Swarm {
@@ -105,8 +91,7 @@ impl Parameters {
             speed_limit: 15.,
             border: 250.,
             mouse_position: (0., 0.),
-            mouse_interactivity: true,
-            follow_fear: 1.0,
+            mouse_interactivity: 0.0,
         }
     }
 
@@ -116,7 +101,6 @@ impl Parameters {
     }
 }
 
-// #[wasm_bindgen]
 impl Swarm {
     fn dists(&mut self) {
         for j in 0..self.x.len() {
@@ -230,14 +214,12 @@ impl Swarm {
     }
 
     fn interact_with_mouse(&mut self) {
-        // console_log!("Mouse: {:?}", self.p.mouse_position);
-        if !self.p.mouse_interactivity { return }
-        let scaling: f32 = 0.005;
+        const scaling: f32 = 0.002;
 
         for i in 0..self.p.number_boids {
             if dist(self.p.mouse_position, (self.x[i], self.y[i])) < self.p.visual_range * 4. {
-                self.dx[i] += self.p.follow_fear * scaling * (self.p.mouse_position.0 - self.x[i]);
-                self.dy[i] += self.p.follow_fear * scaling * (self.p.mouse_position.1 - self.y[i]);
+                self.dx[i] += self.p.mouse_interactivity * scaling * (self.p.mouse_position.0 - self.x[i]);
+                self.dy[i] += self.p.mouse_interactivity * scaling * (self.p.mouse_position.1 - self.y[i]);
             }
         }
     }
@@ -246,6 +228,7 @@ impl Swarm {
 #[wasm_bindgen]
 impl Swarm {
     pub fn tick(&mut self) {
+        if self.p.speed_limit == 0. { return; }
         for k in 0..self.x.len() {
             self.x[k] += self.dx[k];
             self.y[k] += self.dy[k];
@@ -367,11 +350,8 @@ impl Swarm {
     pub fn set_speed_limit(&mut self, speed_limit: f32) {
         self.p.speed_limit = speed_limit
     }
-    pub fn set_mouse_interactivity(&mut self, checked: bool) {
-        self.p.mouse_interactivity = checked
-    }
-    pub fn set_follow_fear(&mut self, checked: bool) {
-        self.p.follow_fear = if checked { 1.0 } else { -1.0 }
+    pub fn set_mouse_interactivity(&mut self, interactivity: f32) {
+        self.p.mouse_interactivity = interactivity
     }
     pub fn set_mouse_position(&mut self, x: f32, y: f32) {
         self.p.mouse_position = (x, y);
