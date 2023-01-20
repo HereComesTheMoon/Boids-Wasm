@@ -91,7 +91,7 @@ impl Parameters {
             speed_limit: 15.,
             border: 250.,
             mouse_position: (0., 0.),
-            mouse_interactivity: 0.0,
+            mouse_interactivity: 1.0,
         }
     }
 
