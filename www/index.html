@@ -21,6 +21,8 @@
       align-items: center;
       justify-content: center;
       background-color: #ddffff;
+      font-size: 100%;
+      font-family: Verdana, sans-serif;
     }
 
     canvas {
@@ -96,6 +98,18 @@
       margin: 0px auto;
       text-align: justify;
     }
+
+    .downarrow {
+      border: solid black;
+      border-width: 0 5px 5px 0;
+      display: inline-block;
+      padding: 12px;
+      transform: rotate(45deg);
+      -webkit-transform: rotate(45deg);
+      position: absolute;
+      z-index: 1;
+      top: -10%;
+    }
   </style>
 </head>
 
@@ -130,19 +144,23 @@
   <canvas id="boids-canvas"></canvas>
   <script src="./bootstrap.js"></script>
   <div class="mytext">
+    <i class="downarrow"></i>
     <h1>Boids</h1>
     <p id="textbody">
       Boids (supposedly from "bird-oid objects") are an example of simulated 'artificial life' with complex emergent
-      behavior.
-      Each 'boid' follows a set of simple, straight-forward rules which update its current movement (direction and
-      velocity) based on the boids which it sees in its neighbourhood, similar to how a cell in the famous Game of Life
-      updates its current state based on other cells around it.
-      That's where most of the similarities end, though. Boids are a 'continuous' model (as opposed to a discrete,
-      grid-based one), and they never 'die' or come into existence—at least not in this particular implementation.
+      behavior similar to that of a flock of birds.
     </p>
     <p id="textbody">
-      PS: I am not a web-designer. This site should work best on a desktop computer, at last but not at least since the
-      boids may chase (or flee from) your cursor—make sure to fiddle with the interactivity slider.
+      Each 'boid' follows a set of simple rules which update its current direction and velocity based on the
+      boids which it sees in its neighbourhood, similar to how a cell in the famous Game of Life updates its current
+      state based on other cells around it. That's where most of the similarities end, though. Boids are a 'continuous'
+      model (as opposed to a discrete, grid-based one), and they never 'die' or come into existence—at least not in this
+      particular implementation.
+    </p>
+    <p id="textbody">
+      PS: I am not much of a web-designer. This site was designed with desktop computers in mind, at last but not at
+      least since the boids may chase (or flee from) your cursor—make sure to fiddle with the sliders for fine-grained
+      control.
     </p>
     <div class="explainer-grid">
       <div class="explainer-grid-item">

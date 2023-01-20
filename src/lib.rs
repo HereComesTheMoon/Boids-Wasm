@@ -83,8 +83,8 @@ impl Parameters {
             number_boids: 200,
             width,
             height,
-            separation: 0.05,
-            separation_min_distance: 20.0,
+            separation: 0.1,
+            separation_min_distance: 25.0,
             alignment: 0.04,
             cohesion: 0.005,
             visual_range: 75.0,
@@ -145,8 +145,8 @@ impl Swarm {
                     continue;
                 }
 
-                separation.0 += self.x[j] - self.x[i];
-                separation.1 += self.y[j] - self.y[i];
+                separation.0 += Parameters::interpolate(0., 1., (self.p.separation_min_distance - self.dists[i][j]) / self.p.separation_min_distance)  * (self.x[j] - self.x[i]);
+                separation.1 += Parameters::interpolate(0., 1., (self.p.separation_min_distance - self.dists[i][j]) / self.p.separation_min_distance)  * (self.y[j] - self.y[i]);
             }
             self.dx[j] += separation.0 * self.p.separation;
             self.dy[j] += separation.1 * self.p.separation;
