@@ -20,10 +20,11 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      background-color: #ddffff;
     }
 
     canvas {
-      position: absolute;
+      position: fixed;
       height: 100%;
       width: 100%;
       z-index: 0;
@@ -48,6 +49,52 @@
       background-color: #dce0dd;
       border: 1px solid #666;
       margin-top: 20px;
+    }
+
+    .explainer-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, auto);
+      grid-auto-rows: minmax(100px, auto);
+      grid-column-gap: 100px;
+      grid-row-gap: 10px;
+      padding: 100px;
+      position: relative;
+      left: 0;
+      z-index: 1;
+    }
+
+    .explainer-grid-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 0px solid #666;
+      margin-top: 20px;
+      padding: 10px;
+      opacity: 90%;
+    }
+
+    .mytext {
+      margin-top: 200vh;
+      height: auto;
+      position: relative;
+      text-align: center;
+    }
+
+    .h1 {
+      width: 100%;
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+      display: flex;
+    }
+
+    #textbody {
+      min-width: 20%;
+      max-width: 50%;
+      padding: 10px;
+      margin: 0px auto;
+      text-align: justify;
     }
   </style>
 </head>
@@ -80,8 +127,53 @@
       <input type="range" min="0" max="30" value="15" step=5 class="slider" id="slider-speed-limit">
     </div>
   </div>
-  <canvas id="boids-canvas" </canvas>
-    <script src="./bootstrap.js"></script>
+  <canvas id="boids-canvas"></canvas>
+  <script src="./bootstrap.js"></script>
+  <div class="mytext">
+    <h1>Boids</h1>
+    <p id="textbody">
+      Boids (supposedly from "bird-oid objects") are an example of simulated 'artificial life' with complex emergent
+      behavior.
+      Each 'boid' follows a set of simple, straight-forward rules which update its current movement (direction and
+      velocity) based on the boids which it sees in its neighbourhood, similar to how a cell in the famous Game of Life
+      updates its current state based on other cells around it.
+      That's where most of the similarities end, though. Boids are a 'continuous' model (as opposed to a discrete,
+      grid-based one), and they never 'die' or come into existence—at least not in this particular implementation.
+    </p>
+    <p id="textbody">
+      PS: I am not a web-designer. This site should work best on a desktop computer, at last but not at least since the
+      boids may chase (or flee from) your cursor—make sure to fiddle with the interactivity slider.
+    </p>
+    <div class="explainer-grid">
+      <div class="explainer-grid-item">
+        <h1>Cohesion</h1>
+      </div>
+      <div class="explainer-grid-item">
+        <h1>Separation</h1>
+      </div>
+      <div class="explainer-grid-item">
+        <h1>Alignment</h1>
+      </div>
+
+      <div class="explainer-grid-item"> <a href="https://en.wikipedia.org/wiki/File:Rule_cohesion.gif"><img
+            src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Rule_cohesion.gif"> </a> </div>
+      <div class="explainer-grid-item"> <a href="https://en.wikipedia.org/wiki/File:Rule_separation.gif"><img
+            src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Rule_separation.gif"> </a> </div>
+      <div class="explainer-grid-item"> <a href="https://en.wikipedia.org/wiki/File:Rule_alignment.gif"><img
+            src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Rule_alignment.gif"> </a> </div>
+
+      <div class="explainer-grid-item"> Each boid tries to move towards the collective center of those boids which it
+        sees in its neighbourhood. </div>
+
+      <div class="explainer-grid-item"> Each boid tries to move away from any other boid which is getting too close.
+      </div>
+
+      <div class="explainer-grid-item"> Each boid aligns its own movement direction and speed with that of the other
+        boids it can see. </div>
+
+    </div>
+  </div>
+  <h1>End</h1>
 </body>
 
 </html>
